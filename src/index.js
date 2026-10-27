@@ -5,6 +5,7 @@ const prisma = require("./db");
 const usersRoutes = require("./routes/users.routes");
 const postsRoutes = require("./routes/posts.routes");
 const requestLogger = require("./middlewares/logger");
+const { notFoundHandler, errorHandler } = require("./middlewares/errorHandler");
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -16,6 +17,9 @@ app.get("/health", (req, res) => {
 });
 app.use("/users", usersRoutes);
 app.use("/posts", postsRoutes);
+
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 async function startServer() {
   try {
