@@ -4,10 +4,12 @@ const express = require("express");
 const prisma = require("./db");
 const usersRoutes = require("./routes/users.routes");
 const postsRoutes = require("./routes/posts.routes");
+const requestLogger = require("./middlewares/logger");
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 
+app.use(requestLogger);
 app.use(express.json());
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "OK" });
